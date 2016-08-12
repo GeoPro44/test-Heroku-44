@@ -1,0 +1,13 @@
+{
+  "name": "MEAN",
+  "version": "1.0.0",
+  "description": "A MEAN app that allows users to manage contact lists",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+	"body-parser": "^1.13.3",
+	"express": "^4.13.3"
+  }
+}
