@@ -1,8 +1,7 @@
 {
-  "name": "MEAN",
+  "name": "heroku-github test",
   "version": "1.0.0",
-  "description": "A MEAN app that allows users to manage contact lists",
-  "main": "server.js",
+  "description": "heroku-github test",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
