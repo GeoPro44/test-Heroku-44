@@ -1,0 +1,139 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Sort and Filter</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="site.css"> -->
+    <style>
+        body { padding-top:50px; }
+    </style>
+
+    <!-- JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="app.js"></script>
+
+</head>
+<body>
+<div class="container" ng-app="sortApp" ng-controller="mainController">
+  
+  <div class="alert alert-info">
+    <p>Sort Type: {{ sortType }}</p>
+    <p>Sort Reverse: {{ sortReverse }}</p>
+    <p>Search Query: {{ searchFish }}</p>
+  </div>
+  
+  <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish">
+      </div>      
+    </div>
+  </form> 
+  
+	<!--Like it ?-->
+	<div class="btn-group">
+		<a class="btn dropdown-toggle btn-warning" data-toggle="dropdown" href="javascript:void(0)"> Like it ? <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="javascript:void(0)" ng-click="addFilter('likeIt', true, 'Only Show Liked')">Like it</a></li>
+			<li><a href="javascript:void(0)" ng-click="addFilter('likeIt', false, 'Only Show Hated')">Don't Like it</a></li>
+		</ul>
+	</div>	
+	
+    <!--Price-->
+	<div class="btn-group">
+		<a class="btn dropdown-toggle btn-warning" data-toggle="dropdown" href="javascript:void(0)"> Price <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="javascript:void(0)" ng-click="addFilter('priceGreater', 5, 'Only Show Price Greater than 5')">Price Greater than 5</a></li>
+			<li><a href="javascript:void(0)" ng-click="addFilter('priceGreater', 10, 'Only Show Price Greater than 10')">Price Greater than 10</a></li>			  
+		</ul>
+	</div>		
+	
+	<br/>
+	<br/>
+	
+	<div class="form-group">
+		<span ng-repeat="f in filterList">		
+			<span class="tag label label-info">
+				<span>{{f.displayText}}</span>
+				<a href="javascript:void(0)">
+					<i class="remove glyphicon glyphicon-remove-sign glyphicon-white" ng-click="removeFilter(f.filterName)"></i>
+				</a> 
+			</span>
+		</span>
+	</div> 
+  
+  <table class="table table-bordered table-striped">
+    
+    <thead>
+      <tr>
+	  
+        <td>
+          <a href="javascript:void(0)" ng-click="sortType = 'name'; sortReverse = !sortReverse">Sushi Roll 
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+		
+        <td>
+          <a href="javascript:void(0)" ng-click="sortType = 'fish'; sortReverse = !sortReverse"> Fish Type 
+            <span ng-show="sortType == 'fish' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'fish' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+		
+        <td>
+          <a href="javascript:void(0)" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse"> Taste Level 
+            <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+		
+		<td>
+          <a href="javascript:void(0)" ng-click="sortType = 'price'; sortReverse = !sortReverse"> Price 
+            <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+		
+		<td>
+          <a href="javascript:void(0)" > Like it? 
+		</td>
+		
+		
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | customFilter:filterList | filter:searchFish"">
+        <td>{{ roll.name }}</td>
+        <td>{{ roll.fish }}</td>
+        <td>{{ roll.tastiness }}</td>
+        <td>{{ roll.price }}</td>
+        <td>{{ roll.checked }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+  
+  <p class="text-center text-muted">
+    <a href="#" target="_blank">Read the Tutorial</a>
+  </p>
+  
+  <p class="text-center">
+    by <a href="http://scotch.io" target="_blank">scotch.io</a>
+	<!-- https://scotch.io/tutorials/building-custom-angularjs-filters -->
+  </p>
+  
+</div>
+</body>
+</html>
